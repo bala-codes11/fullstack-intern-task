@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Launch — Startup Website</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, Arial, sans-serif;
+      color: #211b1b;
+      background: #fff;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, 92%); margin: auto; }
+
+    header {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f0e8e6;
+    }
+    .logo { font-size: 25px; font-weight: 900; letter-spacing: -1px; }
+    .logo span { color: #ed3d32; }
+    nav { display: flex; align-items: center; gap: 26px; color: #77716f; font-size: 13px; }
+    nav a:hover { color: #ed3d32; }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 19px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      transition: .2s;
+    }
+    .btn-primary { background: #ed3d32; color: #fff; }
+    .btn-primary:hover { background: #cb2d24; transform: translateY(-2px); }
+    .btn-secondary { background: #fff; border: 1px solid #e8deda; color: #292321; }
+    .btn-secondary:hover { border-color: #ed3d32; }
+
+    .hero {
+      text-align: center;
+      padding: 85px 0 65px;
+      background: radial-gradient(ellipse at 50% 0%, #fff0ed 0%, #fff 68%);
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 13px;
+      border: 1px solid #ffd4ce;
+      border-radius: 30px;
+      background: #fff9f7;
+      color: #d93329;
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 850px;
+      margin: 24px auto 19px;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.04;
+      letter-spacing: -3.5px;
+    }
+    h1 span { color: #ed3d32; }
+    .hero-copy {
+      max-width: 570px;
+      margin: auto;
+      color: #79716f;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+    .actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+    .note { margin-top: 15px; color: #8e8582; font-size: 11px; }
+
+    .preview {
+      max-width: 790px;
+      margin: 45px auto 0;
+      padding: 13px;
+      border: 1px solid #eee3e0;
+      border-radius: 15px;
+      background: #fff;
+      box-shadow: 0 25px 75px #51251b13;
+      text-align: left;
+    }
+    .window-bar { display: flex; gap: 5px; padding: 3px 0 13px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #e0d6d3; }
+    .app {
+      display: grid;
+      grid-template-columns: 135px 1fr;
+      min-height: 240px;
+      border: 1px solid #f0e9e7;
+      border-radius: 9px;
+      overflow: hidden;
+    }
+    .sidebar { padding: 17px 10px; background: #fff9f7; border-right: 1px solid #f0e9e7; }
+    .app-brand { margin-bottom: 20px; font-size: 10px; font-weight: 900; }
+    .app-brand span { color: #ed3d32; }
+    .side-link { margin: 4px 0; padding: 8px 6px; border-radius: 5px; color: #928784; font-size: 8px; }
+    .side-link.active { color: #d93329; background: #ffe9e4; }
+    .app-main { padding: 17px; }
+    .app-title { font-size: 13px; font-weight: 850; }
+    .app-sub { margin-top: 4px; color: #a09692; font-size: 8px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 16px; }
+    .stat { padding: 11px; border: 1px solid #f0e9e7; border-radius: 7px; }
+    .stat small { display: block; color: #938984; font-size: 8px; }
+    .stat strong { display: block; margin-top: 6px; font-size: 15px; }
+    .stat em { display: block; margin-top: 3px; color: #219653; font-size: 7px; font-style: normal; }
+    .chart {
+      height: 82px;
+      display: flex;
+      align-items: end;
+      gap: 7px;
+      margin-top: 12px;
+      padding: 9px;
+      border: 1px solid #f0e9e7;
+      border-radius: 7px;
+      background: repeating-linear-gradient(to bottom, #fff 0 19px, #f8f2f0 20px 21px);
+    }
+    .chart span { flex: 1; border-radius: 3px 3px 0 0; background: linear-gradient(#ff897d, #ed3d32); }
+
+    .section { padding: 75px 0; }
+    .section-head { max-width: 650px; margin: auto; text-align: center; }
+    .kicker { color: #ed3d32; font-size: 10px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+    h2 { margin-top: 12px; font-size: clamp(29px, 4vw, 43px); letter-spacing: -1.7px; line-height: 1.2; }
+    .section-desc { max-width: 530px; margin: 13px auto 0; color: #827875; font-size: 13px; line-height: 1.8; }
+
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; margin-top: 38px; }
+    .feature { padding: 24px; border: 1px solid #f0e7e4; border-radius: 12px; background: #fff; }
+    .feature-icon {
+      display: grid; place-items: center; width: 43px; height: 43px;
+      border-radius: 11px; background: #fff0ed; color: #ed3d32; font-size: 20px;
+    }
+    .feature h3 { margin-top: 18px; font-size: 15px; }
+    .feature p { margin-top: 8px; color: #827875; font-size: 12px; line-height: 1.8; }
+
+    .workflow { background: #fff8f6; border-block: 1px solid #f5e9e6; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 38px; }
+    .step { padding-top: 18px; border-top: 1px solid #eadbd7; }
+    .step-number { color: #ed3d32; font-size: 11px; font-weight: 900; }
+    .step h3 { margin-top: 11px; font-size: 15px; }
+    .step p { margin-top: 8px; color: #827875; font-size: 12px; line-height: 1.8; }
+
+    .cta {
+      padding: 50px 25px;
+      border-radius: 17px;
+      background: #281d1d;
+      color: white;
+      text-align: center;
+    }
+    .cta h2 { margin-top: 0; }
+    .cta p { max-width: 510px; margin: 13px auto 23px; color: #d0c0bd; font-size: 13px; }
+    footer { padding: 26px 0; border-top: 1px solid #f0e8e6; color: #8b817e; font-size: 11px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 15px; }
+
+    @media (max-width: 700px) {
+      nav { gap: 12px; font-size: 11px; }
+      nav a:not(.nav-cta) { display: none; }
+      .hero { padding: 60px 0 40px; }
+      h1 { letter-spacing: -2px; }
+      .app { grid-template-columns: 85px 1fr; }
+      .sidebar { padding: 12px 5px; }
+      .app-main { padding: 10px 7px; }
+      .stats { gap: 4px; }
+      .stat { padding: 7px 4px; }
+      .stat strong { font-size: 11px; }
+      .chart { gap: 4px; height: 70px; }
+      .features, .steps { grid-template-columns: 1fr; }
+      .section { padding: 52px 0; }
+      .footer-inner { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <a href="#home" class="logo">launch<span>.</span></a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#workflow">How it works</a>
+      <a href="#about">About</a>
+      <a href="#get-started" class="btn btn-primary nav-cta">Get started ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="about">
+      <div class="container">
+        <span class="eyebrow">✦ Introducing Launch 2.0</span>
+        <h1>Your next big idea <br>starts <span>right here.</span></h1>
+        <p class="hero-copy">Everything your growing team needs to turn ambitious ideas into meaningful results. Work smarter, move faster, and build something remarkable.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#get-started">Start building free ↗</a>
+          <a class="btn btn-secondary" href="#features">Explore features ↓</a>
+        </div>
+        <p class="note">No credit card required · Free to get started</p>
+
+        <div class="preview">
+          <div class="window-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="app">
+            <aside class="sidebar">
+              <div class="app-brand">✦ launch<span>.</span> workspace</div>
+              <div class="side-link active">▦ Overview</div>
+              <div class="side-link">◷ Projects</div>
+              <div class="side-link">♙ Team</div>
+              <div class="side-link">▤ Reports</div>
+            </aside>
+            <div class="app-main">
+              <div class="app-title">Welcome back, Alex 👋</div>
+              <div class="app-sub">Here's a snapshot of your team's progress.</div>
+              <div class="stats">
+                <div class="stat"><small>Active projects</small><strong>24</strong><em>↗ 12% this month</em></div>
+                <div class="stat"><small>Tasks completed</small><strong>186</strong><em>↗ 18% this month</em></div>
+                <div class="stat"><small>Team progress</small><strong>84%</strong><em>↗ 8% this month</em></div>
+              </div>
+              <div class="chart">
+                <span style="height:32%"></span><span style="height:54%"></span>
+                <span style="height:43%"></span><span style="height:70%"></span>
+                <span style="height:58%"></span><span style="height:85%"></span>
+                <span style="height:67%"></span><span style="height:96%"></span>
+                <span style="height:78%"></span><span style="height:100%"></span>
+                <span style="height:82%"></span><span style="height:95%"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Everything in one place</div>
+          <h2>Less busywork. More breakthroughs.</h2>
+          <p class="section-desc">Simple, powerful tools designed to help your team stay focused on what really matters.</p>
+        </div>
+        <div class="features">
+          <article class="feature"><div class="feature-icon">⚡</div><h3>Move faster</h3><p>Automate repetitive tasks and give your team more time for meaningful work.</p></article>
+          <article class="feature"><div class="feature-icon">◈</div><h3>See the big picture</h3><p>Keep projects, milestones, and progress visible in one organized space.</p></article>
+          <article class="feature"><div class="feature-icon">♧</div><h3>Work as one team</h3><p>Bring people together with shared goals, clear ownership, and easy collaboration.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section workflow" id="workflow">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Simple by design</div>
+          <h2>From idea to impact in three steps.</h2>
+        </div>
+        <div class="steps">
+          <article class="step"><div class="step-number">01 / GET STARTED</div><h3>Create your workspace</h3><p>Set up your space in minutes and bring your team together.</p></article>
+          <article class="step"><div class="step-number">02 / GET ORGANIZED</div><h3>Build your workflow</h3><p>Plan projects, set priorities, and make progress easy to follow.</p></article>
+          <article class="step"><div class="step-number">03 / MAKE PROGRESS</div><h3>See results happen</h3><p>Understand what's working and keep moving toward your goals.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="get-started">
+      <div class="container">
+        <div class="cta">
+          <h2>Ready to build what's next?</h2>
+          <p>Your next chapter starts with one small step. Let's make it count.</p>
+          <a class="btn btn-primary" href="mailto:hello@example.com">Let's get started ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span class="logo">launch<span>.</span></span>
+      <span>© 2026 Launch Studio · Built for ambitious teams</span>
+    </div>
+  </footer>
+</body>
+</html>

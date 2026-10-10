@@ -1,0 +1,675 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f5f0">
+  <title>Folio — Creative Developer Portfolio</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: #f7f5f0;
+      color: #20201d;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    header {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e5e1d8;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+    }
+
+    .logo span { color: #f05a36; }
+
+    nav {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      color: #77746c;
+      font-size: 12px;
+    }
+
+    nav a:hover { color: #f05a36; }
+
+    .availability {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10px;
+      color: #5e6256;
+    }
+
+    .availability i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #58a66a;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 45px;
+      align-items: center;
+      padding: 80px 0 75px;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #f05a36;
+    }
+
+    h1 {
+      max-width: 680px;
+      margin: 20px 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(46px, 6vw, 76px);
+      line-height: 1.02;
+      font-weight: 500;
+      letter-spacing: -3px;
+    }
+
+    h1 em {
+      color: #f05a36;
+      font-weight: 500;
+    }
+
+    .hero-copy {
+      max-width: 470px;
+      color: #77746c;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 27px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border: 1px solid #20201d;
+      background: #20201d;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      transition: .2s;
+    }
+
+    .button:hover {
+      background: #f05a36;
+      border-color: #f05a36;
+    }
+
+    .button.light {
+      color: #20201d;
+      background: transparent;
+      border-color: #d8d3c8;
+    }
+
+    .button.light:hover { color: white; }
+
+    .hero-art {
+      position: relative;
+      min-height: 390px;
+      overflow: hidden;
+      background: #e7dfd1;
+    }
+
+    .art-circle {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      background: #f05a36;
+    }
+
+    .art-circle:after {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      border: 1px solid #ffffff80;
+      border-radius: 50%;
+    }
+
+    .art-block {
+      position: absolute;
+      width: 190px;
+      height: 230px;
+      left: 42px;
+      bottom: -20px;
+      background: #25251f;
+      transform: rotate(-9deg);
+    }
+
+    .art-block:after {
+      content: "DESIGN\A WITH INTENT";
+      white-space: pre;
+      position: absolute;
+      top: 30px;
+      left: 20px;
+      color: #f7f5f0;
+      font-family: Georgia, serif;
+      font-size: 25px;
+      line-height: 1.2;
+    }
+
+    .art-number {
+      position: absolute;
+      right: 22px;
+      bottom: 18px;
+      font-family: Georgia, serif;
+      font-size: 12px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 23px 0;
+      border-top: 1px solid #e5e1d8;
+      border-bottom: 1px solid #e5e1d8;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: 29px;
+      font-weight: 500;
+    }
+
+    .stat span {
+      color: #77746c;
+      font-size: 10px;
+    }
+
+    .section { padding: 75px 0; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 25px;
+    }
+
+    h2 {
+      margin-top: 10px;
+      font-family: Georgia, serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+    }
+
+    .section-description {
+      max-width: 370px;
+      color: #77746c;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 20px;
+      margin-top: 36px;
+    }
+
+    .project { min-width: 0; }
+
+    .project-art {
+      height: 285px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-art.orange { background: #e9c9b8; }
+    .project-art.lavender { background: #d9d7e8; }
+    .project-art.green { background: #d8dfcf; }
+    .project-art.yellow { background: #e9dfb9; }
+
+    .project-label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 6px 9px;
+      background: #f7f5f0e8;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    .mockup {
+      width: 76%;
+      min-height: 180px;
+      padding: 14px;
+      background: #fffdf8;
+      box-shadow: 0 18px 40px #27231d18;
+      transform: rotate(-3deg);
+      transition: transform .3s;
+    }
+
+    .project:hover .mockup { transform: rotate(0) scale(1.03); }
+
+    .mockup-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 8px;
+      font-weight: 850;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8e3d9;
+    }
+
+    .mockup-hero {
+      padding: 22px 10px;
+      font-family: Georgia, serif;
+      font-size: 23px;
+      line-height: 1.1;
+    }
+
+    .mockup-hero span { color: #f05a36; }
+
+    .mockup-lines {
+      width: 70%;
+      height: 4px;
+      margin: 6px 10px;
+      background: #e6e1d8;
+    }
+
+    .mockup-button {
+      width: 75px;
+      height: 19px;
+      margin: 12px 10px 0;
+      background: #25251f;
+    }
+
+    .project-art.lavender .mockup {
+      width: 68%;
+      transform: rotate(4deg);
+    }
+
+    .project-art.lavender .mockup-hero span { color: #7770c9; }
+
+    .project-art.green .mockup {
+      background: #25362b;
+      color: #f4f0e5;
+      transform: rotate(-2deg);
+    }
+
+    .project-art.green .mockup-top { border-color: #ffffff25; }
+    .project-art.green .mockup-hero span { color: #b8dc93; }
+    .project-art.green .mockup-lines { background: #657668; }
+    .project-art.green .mockup-button { background: #b8dc93; }
+
+    .project-art.yellow .mockup {
+      width: 72%;
+      transform: rotate(3deg);
+    }
+
+    .project-art.yellow .mockup-hero span { color: #ad7831; }
+
+    .project-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 15px;
+      margin-top: 14px;
+    }
+
+    .project-info h3 { font-size: 14px; }
+    .project-info p { margin-top: 4px; color: #77746c; font-size: 10px; }
+    .project-arrow { font-size: 18px; }
+
+    .skills-section {
+      background: #eeebe3;
+      border-block: 1px solid #e2ddd2;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    .skills-copy p {
+      margin-top: 15px;
+      color: #77746c;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill {
+      padding: 12px 16px;
+      border: 1px solid #d6d0c4;
+      background: #f7f5f0;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .experience-list { margin-top: 32px; }
+
+    .experience-item {
+      display: grid;
+      grid-template-columns: 145px 1fr;
+      gap: 25px;
+      padding: 22px 0;
+      border-top: 1px solid #e5e1d8;
+    }
+
+    .experience-date {
+      color: #f05a36;
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .experience-item h3 { font-size: 15px; }
+    .experience-item p { margin-top: 6px; color: #77746c; font-size: 12px; line-height: 1.8; }
+
+    .contact {
+      padding: 55px 30px;
+      text-align: center;
+      background: #25251f;
+      color: #f7f5f0;
+    }
+
+    .contact .eyebrow { color: #ff987b; }
+    .contact h2 { max-width: 650px; margin: 15px auto; }
+    .contact p { max-width: 450px; margin: auto; color: #c5c2b8; font-size: 13px; }
+    .contact .button { margin-top: 23px; background: #f05a36; border-color: #f05a36; }
+
+    footer {
+      padding: 25px 0;
+      border-top: 1px solid #e5e1d8;
+      color: #77746c;
+      font-size: 10px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .socials { display: flex; gap: 15px; }
+
+    @media (max-width: 750px) {
+      .hero { grid-template-columns: 1fr; padding: 55px 0; }
+      .hero-copy { order: 1; }
+      .hero-art { order: 0; min-height: 330px; }
+      .section-heading { display: block; }
+      .section-description { margin-top: 13px; }
+      .skills-grid { grid-template-columns: 1fr; gap: 25px; }
+    }
+
+    @media (max-width: 550px) {
+      header { height: 68px; }
+      nav { gap: 12px; }
+      nav a:not(:last-child) { display: none; }
+      .availability { display: none; }
+      h1 { letter-spacing: -1.8px; }
+      .art-circle { width: 190px; height: 190px; }
+      .art-block { width: 160px; height: 205px; left: 20px; }
+      .stats { gap: 10px; }
+      .stat strong { font-size: 24px; }
+      .projects { grid-template-columns: 1fr; }
+      .project-art { height: 250px; }
+      .section { padding: 52px 0; }
+      .experience-item { grid-template-columns: 1fr; gap: 7px; }
+      .contact { padding: 42px 18px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <a href="#home" class="logo">folio<span>.</span></a>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact ↗</a>
+    </nav>
+    <div class="availability"><i></i> Available for projects</div>
+  </header>
+
+  <main>
+    <section class="container hero" id="home">
+      <div>
+        <div class="eyebrow">Developer · Designer · Problem solver</div>
+        <h1>Building digital things with <em>purpose.</em></h1>
+        <p class="hero-copy">
+          Hey, I'm Alex — a creative developer who turns thoughtful ideas
+          into useful, accessible, and memorable digital experiences.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#work">Explore my work ↗</a>
+          <a class="button light" href="#contact">Let's talk</a>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="art-circle"></div>
+        <div class="art-block"></div>
+        <div class="art-number">INDEPENDENT CREATIVE — 2026</div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="stats">
+        <div class="stat"><strong>04+</strong><span>Years of curiosity</span></div>
+        <div class="stat"><strong>28</strong><span>Projects explored</span></div>
+        <div class="stat"><strong>12</strong><span>Happy collaborators</span></div>
+      </div>
+    </section>
+
+    <section class="container section" id="work">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Selected work · 2024—2026</div>
+          <h2>A few things I've made.</h2>
+        </div>
+        <p>A selection of web experiences, digital products, and experiments built with curiosity and care.</p>
+      </div>
+
+      <div class="projects">
+        <article class="project">
+          <a href="#contact" aria-label="Discuss the Atelier project">
+            <div class="project-art orange">
+              <span class="project-label">01 / Web design</span>
+              <div class="mockup">
+                <div class="mockup-top"><span>ATELIER</span><span>COLLECTION ↗</span></div>
+                <div class="mockup-hero">Objects for <span>slow living.</span></div>
+                <div class="mockup-lines"></div>
+                <div class="mockup-lines" style="width:48%"></div>
+                <div class="mockup-button"></div>
+              </div>
+            </div>
+          </a>
+          <div class="project-info">
+            <div><h3>Atelier — Digital storefront</h3><p>UI design · React · Ecommerce</p></div>
+            <a class="project-arrow" href="#contact">↗</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <a href="#contact" aria-label="Discuss the Mono project">
+            <div class="project-art lavender">
+              <span class="project-label">02 / Product design</span>
+              <div class="mockup">
+                <div class="mockup-top"><span>MONO STUDIO</span><span>MENU +</span></div>
+                <div class="mockup-hero">Less, but <span>better.</span></div>
+                <div class="mockup-lines"></div>
+                <div class="mockup-lines" style="width:55%"></div>
+                <div class="mockup-button"></div>
+              </div>
+            </div>
+          </a>
+          <div class="project-info">
+            <div><h3>Mono — Brand experience</h3><p>Branding · Design system · CSS</p></div>
+            <a class="project-arrow" href="#contact">↗</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <a href="#contact" aria-label="Discuss the Grove project">
+            <div class="project-art green">
+              <span class="project-label">03 / Web application</span>
+              <div class="mockup">
+                <div class="mockup-top"><span>GROVE</span><span>YOUR SPACE</span></div>
+                <div class="mockup-hero">Grow at your <span>own pace.</span></div>
+                <div class="mockup-lines"></div>
+                <div class="mockup-lines" style="width:60%"></div>
+                <div class="mockup-button"></div>
+              </div>
+            </div>
+          </a>
+          <div class="project-info">
+            <div><h3>Grove — Habit tracker</h3><p>React · UX research · Prototyping</p></div>
+            <a class="project-arrow" href="#contact">↗</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <a href="#contact" aria-label="Discuss the Fieldnotes project">
+            <div class="project-art yellow">
+              <span class="project-label">04 / Editorial</span>
+              <div class="mockup">
+                <div class="mockup-top"><span>FIELDNOTES</span><span>ISSUE 08</span></div>
+                <div class="mockup-hero">Ideas worth <span>keeping.</span></div>
+                <div class="mockup-lines"></div>
+                <div class="mockup-lines" style="width:45%"></div>
+                <div class="mockup-button"></div>
+              </div>
+            </div>
+          </a>
+          <div class="project-info">
+            <div><h3>Fieldnotes — Online journal</h3><p>Typography · Responsive web · Content</p></div>
+            <a class="project-arrow" href="#contact">↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section skills-section" id="about">
+      <div class="container skills-grid">
+        <div class="skills-copy">
+          <div class="eyebrow">A little about me</div>
+          <h2>Curious by nature.<br>Intentional by design.</h2>
+          <p>
+            I enjoy working at the intersection of design and technology.
+            My approach is simple: understand the problem, keep the experience
+            clear, and sweat the details that make a product feel right.
+          </p>
+        </div>
+        <div class="skill-list">
+          <span class="skill">HTML & CSS</span>
+          <span class="skill">JavaScript</span>
+          <span class="skill">React</span>
+          <span class="skill">Next.js</span>
+          <span class="skill">TypeScript</span>
+          <span class="skill">Node.js</span>
+          <span class="skill">UI Design</span>
+          <span class="skill">Responsive Design</span>
+          <span class="skill">Accessibility</span>
+          <span class="skill">Git & GitHub</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="experience">
+      <div class="eyebrow">The journey so far</div>
+      <h2>Experience & learning.</h2>
+
+      <div class="experience-list">
+        <article class="experience-item">
+          <div class="experience-date">2025 — PRESENT</div>
+          <div>
+            <h3>Independent Developer</h3>
+            <p>Designing and building digital experiences for personal projects, small teams, and the open web.</p>
+          </div>
+        </article>
+
+        <article class="experience-item">
+          <div class="experience-date">2024 — 2025</div>
+          <div>
+            <h3>Frontend Developer · Studio North</h3>
+            <p>Worked on responsive interfaces, reusable components, and accessible user experiences.</p>
+          </div>
+        </article>
+
+        <article class="experience-item">
+          <div class="experience-date">2022 — 2024</div>
+          <div>
+            <h3>Learning & experimentation</h3>
+            <p>Built a foundation in web development, explored design systems, and shipped small projects to learn by doing.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container section" id="contact">
+      <div class="contact">
+        <div class="eyebrow">Have something in mind?</div>
+        <h2>Let's make something meaningful.</h2>
+        <p>Have a project, an interesting idea, or just want to say hello? My inbox is open.</p>
+        <a class="button" href="mailto:hello@example.com">hello@example.com ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a href="#home" class="logo">folio<span>.</span></a>
+      <span>© 2026 Alex Morgan · Made with care.</span>
+      <div class="socials">
+        <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href="https://linkedin.com/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

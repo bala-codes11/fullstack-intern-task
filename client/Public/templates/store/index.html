@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f3ec">
+  <title>Form & Field — Minimal Storefront</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, Arial, sans-serif;
+      color: #25231f;
+      background: #f7f3ec;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    .container { width: min(1160px, 92%); margin: auto; }
+
+    .announcement {
+      padding: 9px 15px;
+      text-align: center;
+      color: #f8f4ec;
+      background: #292820;
+      font-size: 10px;
+      letter-spacing: 1.1px;
+    }
+    header {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e5ded2;
+    }
+    .brand { font-size: 23px; font-weight: 900; letter-spacing: -1.2px; }
+    .brand span { color: #a27b43; }
+    nav { display: flex; gap: 27px; color: #69655d; font-size: 12px; }
+    nav a:hover { color: #a27b43; }
+    .header-actions { display: flex; align-items: center; gap: 15px; font-size: 12px; }
+    .cart-button {
+      display: flex; align-items: center; gap: 8px;
+      border: 1px solid #d9d0c2; border-radius: 30px;
+      padding: 9px 13px; background: transparent;
+    }
+    .cart-count {
+      display: grid; place-items: center; width: 19px; height: 19px;
+      border-radius: 50%; background: #a27b43; color: white; font-size: 10px;
+    }
+
+    .hero {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 35px; align-items: center; padding: 55px 0 60px;
+    }
+    .hero-copy { padding: 20px 0 20px 3%; }
+    .eyebrow {
+      color: #98713d; font-size: 10px; font-weight: 850;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    h1 {
+      max-width: 530px; margin: 19px 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(43px, 5vw, 66px); font-weight: 500;
+      line-height: 1.03; letter-spacing: -2.2px;
+    }
+    h1 em { color: #a27b43; font-weight: 500; }
+    .hero-copy p { max-width: 430px; color: #777166; font-size: 14px; line-height: 1.9; }
+    .actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 25px; }
+    .button {
+      display: inline-flex; justify-content: center; align-items: center;
+      padding: 13px 18px; border: 1px solid #292820;
+      background: #292820; color: #fff; font-size: 11px;
+      font-weight: 800; transition: .2s;
+    }
+    .button:hover { background: #a27b43; border-color: #a27b43; }
+    .button.light { color: #292820; background: transparent; border-color: #d6cbbb; }
+    .button.light:hover { color: white; }
+
+    .hero-image {
+      min-height: 430px; position: relative; overflow: hidden;
+      display: grid; place-items: center; background: #e8dfd0;
+    }
+    .hero-art {
+      position: absolute; inset: 0;
+      background: linear-gradient(145deg, #d9c7aa, #eee6d8 55%, #c7b18f);
+    }
+    .sun {
+      position: absolute; top: 42px; right: 45px;
+      width: 95px; height: 95px; border-radius: 50%; background: #f5ebd6aa;
+    }
+    .pedestal {
+      position: absolute; bottom: -22px; left: 12%; width: 76%; height: 180px;
+      background: linear-gradient(90deg, #c0aa89, #e3d1b3 50%, #bba27e);
+      transform: perspective(300px) rotateX(5deg);
+    }
+    .vase {
+      position: absolute; z-index: 2; bottom: 118px; left: 42%;
+      width: 115px; height: 190px;
+      border-radius: 44% 44% 35% 35% / 22% 22% 20% 20%;
+      background: linear-gradient(90deg, #9e7851, #d1b38a 48%, #8e6a46);
+      box-shadow: 20px 20px 40px #60492a22;
+    }
+    .vase:before {
+      content: ""; position: absolute; width: 42px; height: 55px;
+      left: 36px; top: -39px; border-radius: 10px 10px 4px 4px;
+      background: linear-gradient(90deg, #9e7851, #c9aa80 50%, #8e6a46);
+    }
+    .vase:after {
+      content: ""; position: absolute; width: 42px; height: 8px;
+      left: 36px; top: -42px; border-radius: 50%; background: #8c6845;
+    }
+    .branch {
+      position: absolute; z-index: 3; bottom: 290px; left: 51%;
+      width: 3px; height: 145px; background: #6c7652;
+      transform: rotate(17deg); transform-origin: bottom;
+    }
+    .leaf {
+      position: absolute; z-index: 3; width: 39px; height: 17px;
+      border-radius: 100% 0 100% 0; background: #7c8660;
+    }
+    .leaf.one { left: 51%; bottom: 390px; transform: rotate(-27deg); }
+    .leaf.two { left: 56%; bottom: 360px; transform: rotate(25deg) scale(.9); }
+    .leaf.three { left: 48%; bottom: 342px; transform: rotate(-30deg) scale(.8); }
+    .image-label {
+      position: absolute; z-index: 4; bottom: 18px; left: 18px;
+      padding: 9px 12px; background: #f7f3ecdd;
+      font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    .trust-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
+      padding: 20px 0; border-top: 1px solid #e5ded2;
+      border-bottom: 1px solid #e5ded2;
+    }
+    .trust-item { text-align: center; color: #706a60; font-size: 10px; letter-spacing: .4px; }
+    .trust-item strong { display: block; margin-bottom: 4px; color: #292820; font-size: 12px; }
+    .section { padding: 72px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; }
+    .section-head h2 {
+      margin-top: 10px; font-family: Georgia, serif;
+      font-size: clamp(31px, 4vw, 44px); font-weight: 500; letter-spacing: -1.5px;
+    }
+    .section-head p { max-width: 370px; color: #777166; font-size: 12px; line-height: 1.8; }
+
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 23px; }
+    .filter {
+      padding: 8px 13px; border: 1px solid #ddd4c7; border-radius: 30px;
+      color: #6e685f; background: transparent; font-size: 10px;
+    }
+    .filter.active, .filter:hover { border-color: #292820; color: white; background: #292820; }
+    .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 17px; }
+    .product { min-width: 0; }
+    .product-image {
+      height: 255px; position: relative; overflow: hidden;
+      display: grid; place-items: center;
+    }
+    .product-image .tag {
+      position: absolute; top: 12px; left: 12px; z-index: 3;
+      padding: 5px 8px; background: #f7f3ec; color: #292820;
+      font-size: 8px; text-transform: uppercase; letter-spacing: .7px;
+    }
+    .product-image .heart {
+      position: absolute; z-index: 3; top: 10px; right: 11px;
+      border: 0; background: #f7f3ecdd; border-radius: 50%;
+      width: 29px; height: 29px; color: #292820;
+    }
+    .product-info { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; }
+    .product h3 { font-size: 12px; font-weight: 750; }
+    .product p { margin-top: 4px; color: #81796e; font-size: 10px; }
+    .price { font-size: 12px; font-weight: 850; white-space: nowrap; }
+    .swatches { display: flex; gap: 5px; margin-top: 9px; }
+    .swatch { width: 10px; height: 10px; border-radius: 50%; border: 1px solid #0000001a; }
+    .object { position: relative; }
+
+    .mug-bg { background: #e9dfd0; }
+    .mug {
+      width: 105px; height: 112px; border-radius: 12px 12px 35px 35px;
+      background: linear-gradient(90deg, #b9a68c, #e4d6bf 48%, #a18b70);
+      box-shadow: 18px 24px 25px #58452a20;
+    }
+    .mug:after {
+      content: ""; position: absolute; right: -34px; top: 25px;
+      width: 40px; height: 45px; border: 12px solid #b6a186;
+      border-left: 0; border-radius: 0 25px 25px 0;
+    }
+    .lamp-bg { background: #e5e4d9; }
+    .lamp-shade {
+      width: 130px; height: 70px; position: absolute; top: 55px;
+      background: #d0c7b4; clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+    }
+    .lamp-stem { position: absolute; top: 120px; width: 9px; height: 90px; background: #a59b85; }
+    .lamp-base { position: absolute; bottom: 38px; width: 85px; height: 15px; border-radius: 50%; background: #b0a58e; }
+    .bag-bg { background: #eadbd1; }
+    .bag {
+      width: 125px; height: 130px; margin-top: 35px;
+      background: linear-gradient(90deg, #a86f50, #c18b6b 50%, #9b6347);
+      box-shadow: 18px 20px 25px #54301e20;
+    }
+    .bag:before {
+      content: ""; position: absolute; top: -35px; left: 29px;
+      width: 60px; height: 55px; border: 7px solid #986344;
+      border-bottom: 0; border-radius: 30px 30px 0 0;
+    }
+    .notebook-bg { background: #dfe3d6; }
+    .notebook {
+      width: 125px; height: 165px;
+      background: linear-gradient(90deg, #4b5946, #68775e 60%, #3d4b39);
+      box-shadow: 17px 19px 25px #29332125; transform: rotate(-8deg);
+    }
+    .notebook:after {
+      content: "NOTES"; position: absolute; top: 70px; left: 35px;
+      color: #d9d8bf; font-family: Georgia, serif; font-size: 13px; letter-spacing: 2px;
+    }
+    .bottle-bg { background: #dbe4e0; }
+    .bottle {
+      width: 75px; height: 160px; border-radius: 22px 22px 17px 17px;
+      background: linear-gradient(90deg, #7c9a8f, #bfd1c6 50%, #6d8b80);
+      box-shadow: 15px 18px 25px #29463b20;
+    }
+    .bottle:before {
+      content: ""; position: absolute; top: -25px; left: 22px;
+      width: 31px; height: 29px; background: #718c80; border-radius: 5px 5px 2px 2px;
+    }
+    .linen-bg { background: #e9dfd4; }
+    .linen {
+      width: 155px; height: 140px; border-radius: 50% 50% 8px 8px;
+      background: repeating-linear-gradient(90deg, #c4ad91 0 5px, #d7c5ae 5px 10px);
+      transform: rotate(-8deg); box-shadow: 15px 20px 25px #54301e15;
+    }
+    .plate-bg { background: #e5e1d7; }
+    .plate {
+      width: 160px; height: 160px; border-radius: 50%;
+      background: radial-gradient(circle, #f5f0e7 0 48%, #d2c7b5 49% 52%, #f8f4ec 53% 63%, #c9bdab 64% 66%, #e7dfd2 67%);
+      box-shadow: 12px 18px 25px #42382720;
+    }
+
+    .collection { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; }
+    .collection-card {
+      min-height: 250px; padding: 25px; display: flex; flex-direction: column;
+      justify-content: end; background: #e5d9c7; position: relative; overflow: hidden;
+    }
+    .collection-card.dark { color: #fff; background: #34362d; }
+    .collection-card h3 { position: relative; z-index: 2; font-family: Georgia, serif; font-size: 29px; font-weight: 500; }
+    .collection-card p { position: relative; z-index: 2; margin: 6px 0 14px; color: inherit; opacity: .75; font-size: 11px; }
+    .collection-card a { position: relative; z-index: 2; font-size: 11px; font-weight: 850; }
+    .circle-art { position: absolute; right: 28px; top: 25px; width: 170px; height: 170px; border: 1px solid #fff8; border-radius: 50%; }
+    .circle-art:before, .circle-art:after {
+      content: ""; position: absolute; border: 1px solid #fff8; border-radius: 50%; inset: 20px;
+    }
+    .circle-art:after { inset: 43px; }
+
+    .newsletter { padding: 53px 20px; text-align: center; background: #eae0d1; }
+    .newsletter h2 { font-family: Georgia, serif; font-size: 34px; font-weight: 500; }
+    .newsletter p { margin: 9px 0 20px; color: #70675b; font-size: 12px; }
+    .subscribe { display: flex; max-width: 420px; margin: auto; }
+    .subscribe input {
+      min-width: 0; flex: 1; padding: 13px;
+      border: 1px solid #d0c3b1; background: #f9f5ef; outline: none; font-size: 11px;
+    }
+    .subscribe button { border: 0; padding: 0 17px; background: #292820; color: white; font-size: 11px; font-weight: 800; }
+    footer { padding: 28px 0; border-top: 1px solid #e5ded2; color: #797166; font-size: 10px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+    .footer-links { display: flex; gap: 17px; }
+
+    @media (max-width: 850px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { padding-left: 0; }
+      .hero-image { min-height: 360px; }
+      .products { grid-template-columns: repeat(2, 1fr); }
+      .product-image { height: 240px; }
+    }
+    @media (max-width: 600px) {
+      header { height: 70px; }
+      nav { display: none; }
+      .hero { padding: 35px 0 40px; }
+      h1 { letter-spacing: -1.5px; }
+      .hero-image { min-height: 320px; }
+      .vase { transform: scale(.85); transform-origin: bottom; left: 38%; }
+      .branch { left: 49%; }
+      .trust-row { grid-template-columns: 1fr; gap: 14px; }
+      .section { padding: 50px 0; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 12px; }
+      .products { gap: 20px 11px; }
+      .product-image { height: 185px; }
+      .mug { transform: scale(.78); }
+      .lamp-shade { transform: scale(.8); }
+      .bag { transform: scale(.8); }
+      .notebook { transform: rotate(-8deg) scale(.8); }
+      .bottle { transform: scale(.8); }
+      .linen { transform: rotate(-8deg) scale(.8); }
+      .plate { transform: scale(.8); }
+      .product-info { display: block; }
+      .price { margin-top: 6px; }
+      .collection { grid-template-columns: 1fr; }
+      .collection-card { min-height: 220px; }
+      .newsletter h2 { font-size: 28px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">A LITTLE LESS, A LOT BETTER — FREE SHIPPING ON ORDERS OVER ₹2,000</div>
+
+  <header class="container">
+    <a href="#home" class="brand">form <span>&</span> field</a>
+    <nav>
+      <a href="#shop">Shop all</a>
+      <a href="#collections">Collections</a>
+      <a href="#story">Our story</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#shop">Search</a>
+      <button class="cart-button" id="cartButton" type="button">
+        Bag <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow">Thoughtful things for everyday living</div>
+        <h1>Make room for <em>the good things.</em></h1>
+        <p>Considered objects, natural textures, and everyday essentials made to bring a little more calm into your space.</p>
+        <div class="actions">
+          <a class="button" href="#shop">Shop the collection ↗</a>
+          <a class="button light" href="#story">Our philosophy</a>
+        </div>
+      </div>
+      <div class="hero-image" aria-label="Decorative ceramic vase and botanical branch">
+        <div class="hero-art"></div>
+        <div class="sun"></div>
+        <div class="pedestal"></div>
+        <div class="branch"></div>
+        <div class="leaf one"></div>
+        <div class="leaf two"></div>
+        <div class="leaf three"></div>
+        <div class="vase"></div>
+        <div class="image-label">Objects with intention · No. 01</div>
+      </div>
+    </section>
+
+    <div class="container trust-row">
+      <div class="trust-item"><strong>Thoughtfully selected</strong>Quality over quantity</div>
+      <div class="trust-item"><strong>Made to last</strong>Timeless, useful design</div>
+      <div class="trust-item"><strong>Better by nature</strong>Materials with a lighter touch</div>
+    </div>
+
+    <section class="container section" id="shop">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">The everyday edit</div>
+          <h2>Good design. No extra noise.</h2>
+        </div>
+        <p>Useful pieces with considered details. Meet the small things that make your everyday feel special.</p>
+      </div>
+
+      <div class="filters" aria-label="Filter products">
+        <button class="filter active" data-filter="All">All objects</button>
+        <button class="filter" data-filter="Home">Home</button>
+        <button class="filter" data-filter="Accessories">Accessories</button>
+        <button class="filter" data-filter="Stationery">Stationery</button>
+      </div>
+
+      <div class="products" id="products">
+        <article class="product" data-category="Home">
+          <div class="product-image mug-bg">
+            <span class="tag">Bestseller</span>
+            <button class="heart" aria-label="Save ceramic mug">♡</button>
+            <div class="object mug"></div>
+          </div>
+          <div class="product-info"><div><h3>Everyday Ceramic Mug</h3><p>Hand-finished stoneware</p></div><span class="price">₹790</span></div>
+          <div class="swatches"><i class="swatch" style="background:#c7b69c"></i><i class="swatch" style="background:#5c6755"></i><i class="swatch" style="background:#eee5d6"></i></div>
+          <button class="filter add-cart" data-name="Everyday Ceramic Mug" data-price="790" style="margin-top:12px">+ Add to bag</button>
+        </article>
+
+        <article class="product" data-category="Home">
+          <div class="product-image lamp-bg">
+            <span class="tag">New</span>
+            <button class="heart" aria-label="Save table lamp">♡</button>
+            <div class="object lamp-shade"></div><div class="object lamp-stem"></div><div class="object lamp-base"></div>
+          </div>
+          <div class="product-info"><div><h3>Soft Glow Table Lamp</h3><p>Warm ambient lighting</p></div><span class="price">₹2,490</span></div>
+          <div class="swatches"><i class="swatch" style="background:#d0c7b4"></i><i class="swatch" style="background:#8b8b7b"></i></div>
+          <button class="filter add-cart" data-name="Soft Glow Table Lamp" data-price="2490" style="margin-top:12px">+ Add to bag</button>
+        </article>
+
+        <article class="product" data-category="Accessories">
+          <div class="product-image bag-bg">
+            <button class="heart" aria-label="Save everyday bag">♡</button>
+            <div class="object bag"></div>
+          </div>
+          <div class="product-info"><div><h3>Everyday Carry Bag</h3><p>Textured cotton canvas</p></div><span class="price">₹1,290</span></div>
+          <div class="swatches"><i class="swatch" style="background:#a86f50"></i><i class="swatch" style="background:#333a31"></i></div>
+          <button class="filter add-cart" data-name="Everyday Carry Bag" data-price="1290" style="margin-top:12px">+ Add to bag</button>
+        </article>
+
+        <article class="product" data-category="Stationery">
+          <div class="product-image notebook-bg">
+            <span class="tag">Staff pick</span>
+            <button class="heart" aria-label="Save notebook">♡</button>
+            <div class="object notebook"></div>
+          </div>
+          <div class="product-info"><div><h3>The Daily Notebook</h3><p>Recycled paper, cloth cover</p></div><span class="price">₹590</span></div>
+          <div class="swatches"><i class="swatch" style="background:#4b5946"></i><i class="swatch" style="background:#b1a18b"></i></div>
+          <button class="filter add-cart" data-name="The Daily Notebook" data-price="590" style="margin-top:12px">+ Add to bag</button>
+        </article>
+
+        <article class="product" data-category="Home">
+          <div class="product-image bottle-bg">
+            <button class="heart" aria-label="Save glass bottle">♡</button>
+            <div class="object bottle"></div>
+          </div>
+          <div class="product-info"><div><h3>Refillable Glass Bottle</h3><p>Daily hydration companion</p></div><span class="price">₹690</span></div>
+          <div class="swatches"><i class="swatch" style="background:#7c9a8f"></i><i class="swatch" style="background:#d7d6c8"></i></div>
+          <button class="filter add-cart" data-name="Refillable Glass Bottle" data-price="690" style="margin-top:12px">+ Add to bag</button>
+        </article>
+
+        <article class="product" data-category="Accessories">
+          <div class="product-image linen-bg">
+            <span class="tag">Limited</span>
+            <button class="heart" aria-label="Save linen pouch">♡</button>
+            <div class="object linen"></div>
+          </div>
+          <div class="product-info"><div><h3>Natural Linen Pouch</h3><p>Soft woven everyday storage</p></div><span class="price">₹850</span></div>
+          <div class="swatches"><i class="swatch" style="background:#c4ad91"></i><i class="swatch" style="background:#9b9a83"></i></div>
+          <button class="filter add-cart" data-name="Natural Linen Pouch" data-price="850" style="margin-top:12px">+ Add to bag</button>
+        </article>
+
+        <article class="product" data-category="Home">
+          <div class="product-image plate-bg">
+            <button class="heart" aria-label="Save serving plate">♡</button>
+            <div class="object plate"></div>
+          </div>
+          <div class="product-info"><div><h3>Stoneware Serving Plate</h3><p>Organic shape, matte finish</p></div><span class="price">₹1,190</span></div>
+          <div class="swatches"><i class="swatch" style="background:#e7dfd2"></i><i class="swatch" style="background:#b4a28a"></i></div>
+          <button class="filter add-cart" data-name="Stoneware Serving Plate" data-price="1190" style="margin-top:12px">+ Add to bag</button>
+        </article>
+
+        <article class="product" data-category="Stationery">
+          <div class="product-image mug-bg">
+            <span class="tag">Set of 3</span>
+            <button class="heart" aria-label="Save desk set">♡</button>
+            <div class="object" style="width:130px;height:120px;border-radius:5px;background:linear-gradient(90deg,#a27b43,#d5bb8f 50%,#a27b43);box-shadow:15px 20px 25px #54301e20;transform:rotate(7deg)"></div>
+          </div>
+          <div class="product-info"><div><h3>Desk Essentials Set</h3><p>Keep your space in order</p></div><span class="price">₹990</span></div>
+          <div class="swatches"><i class="swatch" style="background:#a27b43"></i><i class="swatch" style="background:#68775e"></i></div>
+          <button class="filter add-cart" data-name="Desk Essentials Set" data-price="990" style="margin-top:12px">+ Add to bag</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="container section" id="collections">
+      <div class="collection">
+        <article class="collection-card">
+          <div class="circle-art"></div>
+          <h3>Quiet corners.</h3>
+          <p>Little upgrades for the spaces you love.</p>
+          <a href="#shop">Explore home objects ↗</a>
+        </article>
+        <article class="collection-card dark">
+          <div class="circle-art"></div>
+          <h3>Daily rituals.</h3>
+          <p>Thoughtful essentials for everyday use.</p>
+          <a href="#shop">Find your everyday ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="story">
+      <div class="container section-head">
+        <div><div class="eyebrow">Our point of view</div><h2>Buy fewer things.<br>Choose them well.</h2></div>
+        <p>Form & Field is built around a simple idea: the things we live with should be useful, beautiful, and made to stay. We choose thoughtful materials, enduring forms, and details worth noticing.</p>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <div class="container">
+        <div class="eyebrow">A thoughtful note, now and then</div>
+        <h2>Good things, in your inbox.</h2>
+        <p>New arrivals, small ideas, and a little inspiration. No noise.</p>
+        <form class="subscribe" id="subscribeForm">
+          <input type="email" id="email" placeholder="Your email address" required>
+          <button type="submit">Sign me up ↗</button>
+        </form>
+        <p id="subscribeMessage" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <a href="#home" class="brand">form <span>&</span> field</a>
+      <span>© 2026 Form & Field. Thoughtfully made for everyday living.</span>
+      <div class="footer-links"><a href="#shop">Shop</a><a href="#story">Our story</a><a href="mailto:hello@example.com">Contact</a></div>
+    </div>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+    const cartCountElement = document.getElementById('cartCount');
+
+    document.querySelectorAll('.add-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        cartCount++;
+        cartCountElement.textContent = cartCount;
+        const originalText = button.textContent;
+        button.textContent = '✓ Added to bag';
+        button.classList.add('active');
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 1100);
+      });
+    });
+
+    document.querySelectorAll('.filter[data-filter]').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.filter[data-filter]').forEach(item => {
+          item.classList.remove('active');
+        });
+        button.classList.add('active');
+
+        const category = button.dataset.filter;
+        document.querySelectorAll('.product').forEach(product => {
+          product.style.display =
+            category === 'All' || product.dataset.category === category ? '' : 'none';
+        });
+      });
+    });
+
+    document.querySelectorAll('.heart').forEach(button => {
+      button.addEventListener('click', () => {
+        button.textContent = button.textContent === '♡' ? '♥' : '♡';
+        button.style.color = button.textContent === '♥' ? '#a33a32' : '#292820';
+      });
+    });
+
+    document.getElementById('cartButton').addEventListener('click', () => {
+      alert(`You have ${cartCount} item(s) in your bag.`);
+    });
+
+    document.getElementById('subscribeForm').addEventListener('submit', event => {
+      event.preventDefault();
+      document.getElementById('subscribeMessage').textContent =
+        'Thanks for joining us! This demo form is ready to connect to your mailing list.';
+      document.getElementById('email').value = '';
+    });
+  </script>
+</body>
+</html>
